@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Gps-guided-rover : A small, arduino based robot that navigates to GPS locations." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Gps-guided-rover</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/bobulisk/GPS-Guided-Rover">View on GitHub</a>
+
+          <h1 id="project_title">Gps-guided-rover</h1>
+          <h2 id="project_tagline">A small, arduino based robot that navigates to GPS locations.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/bobulisk/GPS-Guided-Rover/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/bobulisk/GPS-Guided-Rover/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>GPS Guided Rover</h3>
+
+<p>A small rover is designed to drive directly to a GPS waypoint. Critical to the project, a small GPS unit is mounted on the rover’s surface. Location data is converted to a usable form and a path calculated. The car makes an estimate of how far to turn, then re-calibrates its location. This process continues until the car has reached its destination.</p>
+
+<p>The project utilizes the haversine formula to calculate the distance between two latitude and longitude points. Using the heading determined by the GPS proved highly inaccurate; I chose to mount a compass module to the car, reducing the need to constantly re-calibrate to correctly estimate the car’s heading.</p>
+
+<h3>Authors and Contributors</h3>
+
+<p>Andrew M. (<a href="https://github.com/bobulisk" class="user-mention">@bobulisk</a>)</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Gps-guided-rover maintained by <a href="https://github.com/bobulisk">bobulisk</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
