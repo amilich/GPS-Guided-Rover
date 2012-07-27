@@ -20,6 +20,7 @@
 //14: removed delays in program. 
 //15: added compass support. 
 //16: added EEPROM support. 
+//17: fixed compass turning code. 
 
 //LED Code: 
 //2 fast blinks: coordinate setting false (probably no GPS fix) 
@@ -30,7 +31,7 @@
 #include "DualMC33926MotorShield.h"
 #include <StringToAnything.h>
 #include <Adafruit_GPS.h>
-#include <SoftwareSerial.h>
+#include <SoftwareSerial.h> //not used but necessary to use Adafruit_GPS
 #include <EEPROMAnything.h>
 #include <Wire.h>
 #include <EEPROM.h>
@@ -82,7 +83,7 @@ int headingCount = 0;
 int address = 0;
 unsigned int baseAddr = 0;
 
-int HMC6352SlaveAddress = 0x42;
+int HMC6352SlaveAddress = 0x42; //compass I2C address
 int HMC6352ReadAddress = 0x41;
 int headingValue;
 int magFlux = 13; 
@@ -96,7 +97,7 @@ void setup(){
   pinMode(errorLed, OUTPUT); 
   Serial.println("Input coordinates.");   
   GPS.begin(9600);
-  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //Does not need all data
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); //5HZ is the max speed for RMCGGA  
   useInterrupt(true);
   delay(1000);
@@ -126,14 +127,14 @@ float counter = 0;
 void loop(){
   stopIfFault(); //protects motor driver (in theory, should stop program, but now just gives it time to reset)
   if(millis() < 6000){
-    interpretSerial(); 
+    interpretSerial(); //do not use EEPROM, use input coordinates
   }
-  else if(readEEPROM && !setCoord){
+  else if(readEEPROM && !setCoord){ //if nothing is input, read from eeprom
     Serial.println("Reading previous coordinates."); 
     double readLat; 
     double readLong; 
-    EEPROM_readAnything(baseAddr, readLat);
-    EEPROM_readAnything(baseAddr + 4, readLong); 
+    EEPROM_readAnything(baseAddr, readLat); 
+    EEPROM_readAnything(baseAddr + 4, readLong); //+4 to read next double
     sentTargetLat = readLat; 
     sentTargetLon = readLong; 
     Serial.println(); 
@@ -146,7 +147,7 @@ void loop(){
     readEEPROM = false; 
   }
   if(startDrive){
-    while(coordDist(currentLocLat, currentLocLong, sentTargetLat, sentTargetLon, 1) > 2){
+    while(coordDist(currentLocLat, currentLocLong, sentTargetLat, sentTargetLon, 1) > 2){ //drive until under two meters away
       if (! usingInterrupt) {
         char c = GPS.read();
         if (GPSECHO)
@@ -167,7 +168,7 @@ void loop(){
       float headingSum = (MSB << 8) + LSB;
       float headingInt = headingSum / 10;
       if(headingInt < 360 - magFlux){
-        headingInt += magFlux; 
+        headingInt += magFlux; //magnetic north vs. true north
       }
       else if(headingInt > 360 - magFlux && headingInt < 360){
         float difference = 360 - headingInt; 
@@ -176,7 +177,7 @@ void loop(){
       headingTotal += headingInt; 
       headingCount ++; 
       if(headingCount == headingAvg){
-        currentHeading = headingTotal/headingCount;
+        currentHeading = headingTotal/headingCount; //take average of incoming readings
         headingCount = 0; 
         headingTotal = 0; 
         //Serial.print("Averaged Heading: "); 
@@ -189,9 +190,9 @@ void loop(){
         timer = millis(); 
         printData(); 
 
-        stopIfFault();
+        stopIfFault(); //if motors stall
         //if(GPS.fix == 1){
-        signChange(); 
+        signChange(); //convert from N,S,E,W to positive and negative coordinates
         Serial.print("Current lat: "); 
         Serial.println(currentLocLat, 5); 
         Serial.print("Current lon: "); 

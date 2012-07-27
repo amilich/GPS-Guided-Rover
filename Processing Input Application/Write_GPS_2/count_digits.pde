@@ -1,3 +1,4 @@
+//convert latitude/longitude data - could be one function but arduino softSerial encountered errors
 void countDigits() {
   if (abs(float(latitude)) <= 100) {
     latFloat = float(latitude);

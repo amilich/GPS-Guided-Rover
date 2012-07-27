@@ -1,13 +1,15 @@
+//set new latitude and longitude fromt text boxes
+
 void handleTextFieldEvents(GTextField tfield) {
-  if (tfield == latBox) {
-    switch (latBox.getEventType()) {
+  if (tfield == latBox) { //change latitude
+    switch (latBox.getEventType()) { 
     case GTextField.ENTERED:
       if (latBox.getText() != null)
-        latitude = latBox.getText(); 
+        latitude = latBox.getText(); //set new latitude
       break;
     }
   }
-  else if (tfield == longBox) {
+  else if (tfield == longBox) { //changed longitude
     switch (longBox.getEventType()) {
     case GTextField.ENTERED:
       if (longBox.getText() != null)
@@ -15,7 +17,7 @@ void handleTextFieldEvents(GTextField tfield) {
       break;
     }
   }
-  countDigits(); 
+  countDigits(); //again, interpret new data
   writer = createWriter("coordinates.txt"); 
   writer.println(latitude); 
   writer.println(longitude);

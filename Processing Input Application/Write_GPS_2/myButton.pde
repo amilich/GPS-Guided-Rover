@@ -1,3 +1,4 @@
+//serial and help buttons
 public class myButton {
   int xLength, yLength, zLength; 
   int xCol = 0; 
@@ -18,7 +19,7 @@ public class myButton {
     yLength = y;
   }
 
-  void show(String n, int xPos, int yPos, boolean changeCol) {
+  void show(String n, int xPos, int yPos, boolean changeCol) { //name, pos, flashing
     stroke(0); 
     strokeWeight(1);  
     noFill(); 
@@ -54,7 +55,7 @@ public class myButton {
     buttonY = yPos;
   }
 
-  boolean checkPress() {
+  boolean checkPress() { //does not check if mouse is down - really a mouse over function
     if (mouseX > buttonX && mouseX <= buttonX + xLength && mouseY >= buttonY - 40 
       && mouseY <= buttonY + yLength) {
       xCol = color(255);  

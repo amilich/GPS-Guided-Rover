@@ -35,8 +35,8 @@ void turnToDegree(float finalAngle){
     turnDirection2 = 1;  
     Serial.println("right");  
   }
-    long currentTime = millis();  
-while(currentTime > millis() + 5000 && abs(currentHeading - finalAngle) > 4){
+  long currentTime = millis();  
+  while(currentTime > millis() + 5000 && abs(currentHeading - finalAngle) > 4){ //run until facing right direction or for five directions
     Wire.beginTransmission(HMC6352SlaveAddress);
     Wire.write(HMC6352ReadAddress);     
     Wire.endTransmission();
@@ -46,7 +46,7 @@ while(currentTime > millis() + 5000 && abs(currentHeading - finalAngle) > 4){
     byte LSB = Wire.read();
 
     float headingSum = (MSB << 8) + LSB; 
-    float headingInt = headingSum / 10; 
+    float headingInt = headingSum / 10; //take average again
 
     if(headingInt < 360 - magFlux){
       headingInt += magFlux; 
@@ -68,12 +68,13 @@ while(currentTime > millis() + 5000 && abs(currentHeading - finalAngle) > 4){
   calibrated = false; 
 }
 
-void drive(){
+void drive(){ //not currently used
   if(coordDist(currentLocLat, currentLocLong, sentTargetLat, sentTargetLon, 1) < 2000){
     md.setM1Speed(m1DriveSpeed); 
     md.setM2Speed(m2DriveSpeed); 
   } 
 }
+
 
 
 
