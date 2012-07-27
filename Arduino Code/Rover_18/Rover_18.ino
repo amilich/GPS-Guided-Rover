@@ -1,3 +1,5 @@
+//This program is covered under the Attribution-NonCommercial-ShareAlike 3.0 Unported license. See liscence on http://bobulisk.github.com/GPS-Guided-Rover/.
+
 /*****************************************************************************/
 /*////////////////////GPS Rover: BlueStampEngineering 2012///////////////////*/
 /*///////////////////Created and written by Andrew M.////////////////////////*/
