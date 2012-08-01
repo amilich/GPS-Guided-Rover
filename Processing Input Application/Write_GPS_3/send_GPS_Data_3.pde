@@ -67,14 +67,14 @@ void setup() {
   for (int qq = 0; qq < serialButtons.length; qq++) {
     serialButtons[qq] = new myButton();
   }
-  String template = "http://{S}.mqcdn.com/tiles/1.0.0/osm/{Z}/{X}/{Y}.png"; //map data
+  String template = "http://{S}.mqcdn.com/tiles/1.0.0/osm/{Z}/{X}/{Y}.png";
   String[] subdomains = new String[] { 
     "otile1", "otile2", "otile3", "otile4"
   };
-  latitude = lines[0]; //read from file
+  latitude = lines[0]; 
   longitude = lines[1];
   map = new InteractiveMap(this, new TemplatedMapProvider(template, subdomains));
-  countDigits(); //interpret incoming data
+  countDigits(); 
   //latFloat = float(latitude)/1000000; 
   //longFloat = float(longitude)/1000000; 
   map.setCenterZoom(new Location(latFloat, longFloat), 11);  
@@ -85,7 +85,7 @@ void setup() {
     }
   }
   );
-  writer = createWriter("coordinates.txt"); //to save coordinaets (default)
+  writer = createWriter("coordinates.txt"); 
   writer.println(latitude); 
   writer.println(longitude);
 }
@@ -100,7 +100,7 @@ void draw() {
       Location mouseLocation = map.pointLocation(mouseX, mouseY);
       rect(5, height-5-g.textSize, textWidth("mouse: " + mouseLocation), g.textSize+textDescent());
       fill(0);
-      text("mouse: " + mouseLocation, 5, height-5); //know mouse latitude/longitude
+      text("mouse: " + mouseLocation, 5, height-5);
       fill(255); 
       rect(0, 0, width, 80); 
       fill(0); 
@@ -110,7 +110,7 @@ void draw() {
       countDigits();  
       text("Latitude: " + latFloat, 400, 35); 
       text("Longitude: " + longFloat, 600, 35); 
-      helpButton.show("help", width-100, textY, true); //reconfigure serial configurations
+      helpButton.show("help", width-100, textY, true);
       if (!sent) {
         noFill(); 
         rect(70, 10, 310, 30); 
@@ -132,7 +132,7 @@ void draw() {
       }
       if (portRead.length() < 12) {
         try {
-          portRead += port.read(); //see arduino's serial data
+          portRead += port.read();
         }
         catch(Exception e) {
           e.printStackTrace();
@@ -152,13 +152,13 @@ void draw() {
         refresh = true;
       }
     }
-    else if (screenNum == 1) { //help screen
+    else if (screenNum == 1) {
       background(220); 
       text("Available Serial Ports: ", textX, 80);
       line(textX, 85, textX + 200, 85);  
       helpButton.show("return", width-100, textY, true);
       try {
-        text("Connected", serialButtons[serialConnected].buttonX + 80, serialButtons[serialConnected].buttonY); //show connections under help page
+        text("Connected", serialButtons[serialConnected].buttonX + 80, serialButtons[serialConnected].buttonY);
       }
       catch(Exception e) {
         e.printStackTrace();
@@ -211,7 +211,7 @@ void draw() {
       hand = hand || buttons[i].mouseOver();
     }
 
-    if (keyPressed) { //move
+    if (keyPressed) {
       if (key == CODED) {
         if (keyCode == LEFT) {
           map.tx += 5.0/map.sc;
@@ -251,7 +251,7 @@ void draw() {
   }
 }
 
-void serialEvent(Serial port) { //receive serial data
+void serialEvent(Serial port) { 
   String inString = port.readStringUntil('\n');
   if (inString != null)
     wholeData = inString;
@@ -274,7 +274,7 @@ void keyReleased() {
   }
 }
 
-void mouseDragged() { //move map
+void mouseDragged() {
   boolean hand = false;
   for (int i = 0; i < buttons.length; i++) {
     hand = hand || buttons[i].mouseOver();
@@ -285,7 +285,7 @@ void mouseDragged() { //move map
   }
 }
 
-void mouseWheel(int delta) { //scale map
+void mouseWheel(int delta) {
   float sc = 1.0;
   if (delta < 0) {
     sc = 1.05;

@@ -6,8 +6,8 @@
  */
 
 float TargetTurnDegree(){
-  float latLength = coordDist(currentLocLat, currentLocLong, currentLocLat, sentTargetLon, 1);
-  float lonLength = coordDist(currentLocLat, currentLocLong, sentTargetLat, currentLocLong, 1); 
+  float latLength = coordDist(currentLocLat, currentLocLong, sentTargetLat, currentLocLong, 1); 
+  float lonLength = coordDist(currentLocLat, currentLocLong, currentLocLat, sentTargetLon, 1);
   if(latLength == 0)
     latLength == 0.0001; 
   if(lonLength == 0)
@@ -57,5 +57,7 @@ float coordDist(float currentLat, float currentLon, float targetLat, float targe
   float d = 2.0f * atan2(sqrt(a), sqrt(1.0f - a));
   return d * Earth_Radius * unit_conversion;
 } 
+
+
 
 

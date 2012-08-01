@@ -1,8 +1,7 @@
-//navigation buttons
 class Button {
   float x, y, w, h;
 
-  Button(float x, float y, float w, float h) { //x,y,width,length
+  Button(float x, float y, float w, float h) {
     this.x = x;
     this.y = y;
     this.w = w;

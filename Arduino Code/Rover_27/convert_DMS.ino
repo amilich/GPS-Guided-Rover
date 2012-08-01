@@ -6,7 +6,9 @@ float calculateCurrentLocation(double inputCoord){
   return wholeDegrees + (inputCoord - 100.0*wholeDegrees)/60.0;
 }
 
-
-
-
+void getLatLong(){
+  currentLocLat = calculateCurrentLocation(GPS.latitude); 
+  currentLocLong = calculateCurrentLocation(GPS.longitude); 
+  signChange();  
+}
 
